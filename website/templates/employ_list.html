@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직원 리스트</title>
+    <style>
+        /* 기본 스타일링 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* 화면 높이의 100% */
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%; /* 너비를 100%로 설정 */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        h2, h3 {
+            color: #007bff;
+            margin: 0 0 10px; /* 여백 조정 */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .form-container {
+            margin-top: 20px;
+            display: none; /* 기본적으로 숨김 */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px; /* 글씨 크기 조정 */
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn2 {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px; /* 글씨 크기 조정 */
+        }
+        .btn2:hover {
+            background-color: #0056b3;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+        }
+        .delete-btn:hover {
+            background-color: #ff1a1a;
+        }
+        .update-btn {
+            background-color: #4CAF50;
+        }
+        .update-btn:hover {
+            background-color: #45a049;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px; /* 글씨 크기 조정 */
+        }
+        .alert-success {
+            background-color: #4CAF50;
+        }
+        .alert-error {
+            background-color: #f44336;
+        }
+
+        /* 액션 열 너비를 조정 */
+        th.action-column, td.action-column {
+            width: 150px; /* 필요에 따라 너비 조정 */
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        .home-button-container {
+            text-align: center; /* 가운데 정렬 */
+            margin-top: 20px;
+        }
+
+        .toggle-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 14px; /* 글씨 크기 조정 */
+        }
+
+        .toggle-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 모바일 화면을 위한 미디어 쿼리 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            .btn, .btn2, .toggle-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            th, td {
+                padding: 8px;
+            }
+            .alert {
+                font-size: 12px;
+            }
+        }
+    </style>
+    <script>
+        function toggleForm() {
+            var formContainer = document.getElementById('newEmployeeForm');
+            if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+                formContainer.style.display = 'block';
+            } else {
+                formContainer.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>직원 리스트</h2>
+        <!-- 플래시 메시지 표시 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>직책</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th class="action-column">수정 & 삭제</th> <!-- 클래스 추가 -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.position }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.phone }}</td>
+                    <td class="action-column"> <!-- 클래스 추가 -->
+                        <!-- 수정 버튼 -->
+                        <a href="{{ url_for('views.employ_update', id=employee.id) }}"><button type="submit" class="btn update-btn">수정</button></a>
+                        <!-- 삭제 버튼 -->
+                        <form action="{{ url_for('views.employ_delete', id=employee.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn delete-btn">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <button class="toggle-btn" onclick="toggleForm()">+ 직원 등록</button>
+
+        <div id="newEmployeeForm" class="form-container">
+            <h3>새로운 직원 등록</h3>
+            <form action="{{ url_for('views.employ_list') }}" method="POST">
+                <div class="form-group">
+                    <label for="position">직책</label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">전화번호</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <button type="submit" class="btn">등록</button>
+            </form>
+        </div>
+
+        <!-- 홈 버튼을 가운데로 이동 -->
+        <div class="home-button-container">
+            <a href="{{ url_for('views.home') }}" class="btn2">홈</a>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

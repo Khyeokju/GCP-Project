@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사진 리스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .app-title {
+            position: absolute;
+            top: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px;
+            font-weight: bold;
+            color: #007bff;
+            background-color: #f0f8ff;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .group {
+            margin-bottom: 20px;
+        }
+        .group-header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .group-content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .group-content img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            display: block;
+            margin: 10px auto;
+        }
+        .timestamp {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+            margin: 5px 0;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        .open .arrow {
+            transform: rotate(180deg);
+        }
+        .delete-button {
+            display: block;
+            margin: 10px auto;
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>저장된 CCTV 화면</h1>
+        <div class="search-container">
+            <input type="text" id="searchBox" class="search-box" placeholder="날짜로 검색">
+        </div>
+        {% if grouped_images %}
+        {% for date, images in grouped_images.items() %}
+        <div class="group" data-date="{{ date }}">
+            <div class="group-header" onclick="toggleGroup('{{ date }}')">
+                <span>{{ date }}</span>
+                <span class="arrow">&#9662;</span>
+            </div>
+            <div class="group-content" id="{{ date }}">
+                {% for image in images %}
+                    <div class="image-item">
+                        <img src="{{ image.url }}" alt="{{ image.filename }}">
+                        <div class="timestamp">{{ image.timestamp }}</div>
+                        <button class="delete-button" onclick="deleteImage('{{ image.filename }}')">삭제</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <p>저장된 사진이 없습니다.</p>
+        {% endif %}
+        <a href="{{ url_for('views.home') }}" class="back-button">홈으로 돌아가기</a>
+    </div>
+
+    <script>
+        function toggleGroup(date) {
+            const content = document.getElementById(date);
+            const arrow = content.previousElementSibling.querySelector('.arrow');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function deleteImage(filename) {
+            if (confirm('정말로 이 이미지를 삭제하시겠습니까?')) {
+                fetch('/delete_image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ filename: filename })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('이미지가 삭제되었습니다.');
+                        location.reload();  // 페이지 새로고침
+                    } else {
+                        alert('이미지 삭제에 실패했습니다.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+
+        document.getElementById('searchBox').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const groups = document.querySelectorAll('.group');
+
+            groups.forEach(group => {
+                const date = group.getAttribute('data-date').toLowerCase();
+                if (date.includes(searchTerm)) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안전자가진단</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f0f8ff;
+        }
+        
+        .center-text {
+            text-align: center;
+            color: #0044cc;
+        }
+        
+        h1, h2 {
+            color: #0044cc;
+        }
+        
+        form {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-section {
+            margin-bottom: 20px;
+        }
+        
+        .form-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-section input[type="checkbox"],
+        .form-section input[type="radio"] {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        input[type="button"] {
+            padding: 10px 20px;
+            background-color: #0044cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        input[type="button"]:hover {
+            background-color: #0033a0;
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e0f7fa;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="center-text">안전자가진단</h1>
+    <form id="selfDiagnosisForm">
+        <!-- 사업장 기본정보 섹션 -->
+        <div class="form-section">
+            <h2>Ⅰ. 사업장 기본정보</h2>
+            <label>귀사는 어떤 업종인가요?</label>
+            <input type="checkbox" name="Industry" value="manufacturing">제조업
+            <input type="checkbox" name="Industry" value="construction">건설업
+            <input type="checkbox" name="Industry" value="etc">기타
+        </div>
+        
+        <div class="form-section">
+            <label>귀사는 몇 명이 일하고 있나요?</label>
+            <input type="checkbox" name="employees" value="Less than 5 people">5인 미만
+            <input type="checkbox" name="employees" value="5 or more people">5인 이상 ~ 20인 미만
+            <input type="checkbox" name="employees" value="20 people or more">20인 이상 ~ 50인 미만
+            <input type="checkbox" name="employees" value="50 or more people">50인 이상
+        </div>
+
+        <div class="form-section">
+            <label>귀하의 직책(업무)은 무엇인가요?</label>
+            <input type="checkbox" name="position" value="owner">경영자(사업주)
+            <input type="checkbox" name="position" value="manager">안전‧보건관리자
+            <input type="checkbox" name="position" value="supervisor">관리감독자
+        </div>
+
+        <!-- 위험도 및 대응정도 섹션 -->
+        <div class="form-section">
+            <h2>Ⅱ. 위험도 및 대응정도</h2>
+
+            <label>귀사의 작업장과 근로환경은 어느 정도 위험하다고 생각하나요?</label>
+            <input type="radio" name="risk" value="1">매우 위험하다
+            <input type="radio" name="risk" value="2">위험하다
+            <input type="radio" name="risk" value="3">보통
+            <input type="radio" name="risk" value="4">안전하다
+            <input type="radio" name="risk" value="5">매우 안전하다
+        </div>
+
+        <div class="form-section">
+            <label>귀사에서는 사망사고가 발생할 수 있는 중대한 위험요인은 바로 개선‧관리하고 있나요?</label>
+            <input type="radio" name="management" value="1">전혀 그렇지 않다
+            <input type="radio" name="management" value="2">그렇지 않다
+            <input type="radio" name="management" value="3">보통
+            <input type="radio" name="management" value="4">그렇다
+            <input type="radio" name="management" value="5">매우 그렇다
+        </div>
+
+        <!-- 안전보건관리체계 세부 항목 섹션 -->
+        <div class="form-section">
+            <h2>Ⅲ. 안전보건관리체계 세부 항목</h2>
+
+            <label>1. 사업주가 명확한 안전방침과 목표를 정하고 있나요?</label>
+            <input type="radio" name="policy" value="1">전혀 그렇지 않다
+            <input type="radio" name="policy" value="2">그렇지 않다
+            <input type="radio" name="policy" value="3">보통
+            <input type="radio" name="policy" value="4">그렇다
+            <input type="radio" name="policy" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>2. 안전보건 조직 또는 담당자가 역할을 충실히 수행하고 있나요?</label>
+            <input type="radio" name="organization" value="1">전혀 그렇지 않다
+            <input type="radio" name="organization" value="2">그렇지 않다
+            <input type="radio" name="organization" value="3">보통
+            <input type="radio" name="organization" value="4">그렇다
+            <input type="radio" name="organization" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>3. 노‧사가 함께 사업장의 위험요인을 평가하고 개선하는 위험성평가를 내실있게 실시하고 있나요?</label>
+            <input type="radio" name="riskAssessment" value="1">전혀 그렇지 않다
+            <input type="radio" name="riskAssessment" value="2">그렇지 않다
+            <input type="radio" name="riskAssessment" value="3">보통
+            <input type="radio" name="riskAssessment" value="4">그렇다
+            <input type="radio" name="riskAssessment" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>4. 위험요인을 개선하기 위해 회사가 근로자들의 의견을 듣거나, 근로자들이 회사에 건의, 제안을 자유롭게 하고 있나요?</label>
+            <input type="radio" name="suggestions" value="1">전혀 그렇지 않다
+            <input type="radio" name="suggestions" value="2">그렇지 않다
+            <input type="radio" name="suggestions" value="3">보통
+            <input type="radio" name="suggestions" value="4">그렇다
+            <input type="radio" name="suggestions" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>5. 작업 시작 전에 작업자들이 모여 작업내용과 안전작업 절차 등을 서로 확인하는 작업 전 안전점검회의(TBM: Tool Box Meeting)를 제대로 실시하고 있나요?</label>
+            <input type="radio" name="tbm" value="1">전혀 그렇지 않다
+            <input type="radio" name="tbm" value="2">그렇지 않다
+            <input type="radio" name="tbm" value="3">보통
+            <input type="radio" name="tbm" value="4">그렇다
+            <input type="radio" name="tbm" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>6. 근로자들이 안전보건에 대한 사항을 잘 알고 안전하게 일할 수 있도록 안전보건교육을 충분히 실시하고 있나요?</label>
+            <input type="radio" name="education" value="1">전혀 그렇지 않다
+            <input type="radio" name="education" value="2">그렇지 않다
+            <input type="radio" name="education" value="3">보통
+            <input type="radio" name="education" value="4">그렇다
+            <input type="radio" name="education" value="5">매우 그렇다
+        </div>
+
+        <div class="form-section">
+            <label>7. 사고 등 비상상황을 대비해서 필요한 조치계획(매뉴얼) 등을 마련하고 조치계획에 따라 정기적으로 훈련을 실시하고 있나요?</label>
+            <input type="radio" name="emergency" value="1">전혀 그렇지 않다
+            <input type="radio" name="emergency" value="2">그렇지 않다
+            <input type="radio" name="emergency" value="3">보통
+            <input type="radio" name="emergency" value="4">그렇다
+            <input type="radio" name="emergency" value="5">매우 그렇다
+        </div>
+
+        <input type="button" value="제출" onclick="calculateScore()">
+        <a href="/"><input type="button" value="홈 화면"></a>
+    </form>
+
+    <div id="result" class="result-section" style="display: none;"></div>
+
+    <script>
+        function calculateScore() {
+            const form = document.getElementById('selfDiagnosisForm');
+            
+            // 점수 초기화
+            let score = 0;
+            let feedbackMessages = [];
+    
+            // 체크박스와 라디오 버튼의 점수 계산
+            const ratings = ['risk', 'management', 'policy', 'organization', 'riskAssessment', 'suggestions', 'tbm', 'education', 'emergency'];
+            const feedbacks = {
+                'risk': '작업장의 위험도가 높습니다. 안전 장비와 절차를 강화하세요.',
+                'management': '중대한 위험 요인 개선이 부족합니다. 사고 예방 조치를 강화하세요.',
+                'policy': '사업주의 안전 방침과 목표 설정이 미흡합니다. 명확한 안전 목표를 설정하세요.',
+                'organization': '안전보건 담당자의 역할 수행이 부족합니다. 역할 수행을 적극적으로 강화하세요.',
+                'riskAssessment': '위험성 평가가 부족합니다. 노동자와 함께 위험 요소를 평가하고 개선하세요.',
+                'suggestions': '근로자들의 의견 수렴이 부족합니다. 의견 제안 절차를 개선하세요.',
+                'tbm': '작업 전 안전 점검 회의(TBM)가 미흡합니다. 작업 전에 철저한 점검을 실시하세요.',
+                'education': '안전보건 교육이 충분하지 않습니다. 정기적인 교육을 강화하세요.',
+                'emergency': '비상상황 대비가 부족합니다. 정기적인 훈련과 비상계획을 수립하세요.'
+            };
+    
+            ratings.forEach(rating => {
+                const selected = form.querySelector(`input[name="${rating}"]:checked`);
+                if (selected) {
+                    const ratingValue = parseInt(selected.value);
+                    score += ratingValue;
+                    
+                    // 각 항목별로 점수가 3 이하일 때 피드백 추가
+                    if (ratingValue <= 3) {
+                        feedbackMessages.push(feedbacks[rating]);
+                    }
+                }
+            });
+    
+            // 45점 만점으로 계산
+            let percentage = (score / 45) * 100;
+            
+            // 점수에 따른 평가 결과
+            let resultMessage = '';
+            if (score <= 15) {
+                resultMessage = '안전 관리 상태가 매우 불안정합니다. 많은 개선이 필요합니다.';
+            } else if (score <= 30) {
+                resultMessage = '안전 관리 상태가 보통입니다. 일부 개선이 필요합니다.';
+            } else if (score <= 45) {
+                resultMessage = '안전 관리 상태가 양호합니다. 대부분의 사항이 잘 관리되고 있습니다.';
+            } else {
+                resultMessage = '안전 관리 상태가 매우 좋습니다. 모든 사항이 잘 관리되고 있습니다.';
+            }
+    
+            // 피드백 메시지 추가
+            if (feedbackMessages.length > 0) {
+                resultMessage += '<br><br>추가 피드백:<br>' + feedbackMessages.join('<br>');
+            }
+    
+            // 참고자료 링크 추가
+            let referenceLink = '<br><br>더 많은 정보를 위해 <a href="https://www.moel.go.kr/local/boryeong/info/dataroom/view.do?bbs_seq=20240101829" target="_blank">이 링크(고용노동부가이드)</a>를 참고하세요.';
+    
+            // 결과 표시 (줄바꿈을 위해 innerHTML 사용)
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `총 점수: ${score}/45 (${percentage.toFixed(2)}%)<br>${resultMessage}${referenceLink}`;
+            resultDiv.style.whiteSpace = "pre-wrap"; // 줄바꿈 적용
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
