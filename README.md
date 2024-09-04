@@ -38,7 +38,9 @@ GCP vm instance로 서버를 열고 vscode로 ssh를 연결하여 배포하였�
    - cctv를 앱에 연동하여 실시간으로 AI와 결합 + 관리자 안전 메뉴얼
      - 누구나 쉽게 전문가 수준의 안전관리와 효율적인 관리를 하도록 도와주는 앱
 
-  
+## 버전
+파이썬 버전 3.10.11
+
 ## **기술스택**
   ### Environment
   <img src="https://img.shields.io/badge/Visual Studio Code-0769AD?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
