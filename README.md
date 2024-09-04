@@ -38,8 +38,19 @@ GCP vm instance로 서버를 열고 vscode로 ssh를 연결하여 배포하였�
    - cctv를 앱에 연동하여 실시간으로 AI와 결합 + 관리자 안전 메뉴얼
      - 누구나 쉽게 전문가 수준의 안전관리와 효율적인 관리를 하도록 도와주는 앱
 
-## 버전
-파이썬 버전 3.10.11
+
+
+## 실행 방법 
+
+### 버전
+**python version --3.10.11**
+
+- 카카오톡 알람은 다시 api받고 갱신해야되서 못씀.
+- python 가상환경 생성 후
+  
+```bash
+  pip install -r requirement.txt
+```
 
 ## **기술스택**
   ### Environment
