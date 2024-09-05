@@ -82,15 +82,16 @@ GCP vm instance로 서버를 열고 vscode로 ssh를 연결하여 배포하였�
 
 ## 웹페이지 구성
 <details>
-  <summary><h2>웹페이지 사진</h2></summary>
+  <summary>웹페이지 사진</summary>
  
 ![image](https://github.com/user-attachments/assets/b79b4a66-a858-46be-ba32-2c2b2667f2d0)
+![image](https://github.com/user-attachments/assets/772122a1-836a-478e-8f91-e910df4b12a2)
+![image](https://github.com/user-attachments/assets/10bd42d7-f1b7-4243-99b2-dc2068dd670d)
+![image](https://github.com/user-attachments/assets/f4692b5a-4b78-4615-bb19-8a8d015d15c7)
 ![image](https://github.com/user-attachments/assets/acbae77f-ed1e-43e9-9cc3-30dd46e11921)
 ![image](https://github.com/user-attachments/assets/356e35e6-8b11-413e-bd00-d54dc01df05d)
-![image](https://github.com/user-attachments/assets/f4692b5a-4b78-4615-bb19-8a8d015d15c7)
-![image](https://github.com/user-attachments/assets/10bd42d7-f1b7-4243-99b2-dc2068dd670d)
 ![image](https://github.com/user-attachments/assets/a8a78011-3b78-4b7c-88af-6b5cdf4d2388)
-![image](https://github.com/user-attachments/assets/772122a1-836a-478e-8f91-e910df4b12a2)
+
 </details>
 
 
